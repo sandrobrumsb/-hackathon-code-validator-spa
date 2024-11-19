@@ -1,0 +1,10 @@
+.rodape {
+  background-color: #09073e;
+  color: #ffff;
+  padding: 0.5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.5rem;
+  font-family: "Slabo 27px", serif;
+}

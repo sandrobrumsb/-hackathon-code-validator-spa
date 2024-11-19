@@ -1,0 +1,39 @@
+/* Menu.css */
+
+/* Estilo geral do header */
+header {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: black;
+}
+
+/* Estilo para a logo à esquerda */
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: auto;
+}
+
+/* Contêiner para centralizar as opções */
+.nav-links {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-grow: 1;
+  font-family: "Slabo 27px", serif;
+}
+
+/* Estilo para os links de navegação */
+.nav-links a {
+  color: #09073e;
+  text-decoration: none;
+  font-size: 24px;
+}
+
+/* Efeito ao passar o mouse sobre as opções */
+.nav-links a:hover {
+  color: #ccc;
+  text-decoration: underline;
+}
