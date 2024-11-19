@@ -39,32 +39,61 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Criando chatboot no GoogleColab:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**1. Instalar o Pacote Necessário
+!pip install google-generativeai
 
-### Code Splitting
+	2. Configurar a Chave de API
+from google.colab import userdata
+import google.generativeai as genai
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+# Pegando a chave do segredo configurado no Colab
+GOOGLE_GEMINI_API_KEY = userdata.get('GOOGLE_GEMINI_API_KEY')
 
-### Analyzing the Bundle Size
+# Configurando a API
+genai.configure(api_key=GOOGLE_GEMINI_API_KEY)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+	3. Listar Modelos Disponíveis
+# Listar modelos suportados
+for m in genai.list_models():
+    if 'generateContent' in m.supported_generation_methods:
+        print(m.name)
 
-### Making a Progressive Web App
+	4. Escolhendo o modelo
+model = genai.GenerativeModel("gemini-1.5-pro-latest")
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+	5. Criar o Chatbot com Correção de Código**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+# Iniciar o chatbot
+chat = model.start_chat(history=[])
 
-### Deployment
+def corrigir_codigo(prompt):
+    """
+    Função que envia o código ao chatbot e retorna a resposta corrigida.
+    """
+    correction_prompt = f"""
+    Você é um assistente especializado em correção de código. Realize as seguintes melhorias:
+    1. **Legibilidade**: Melhore nomes de variáveis, clareza e adicione comentários úteis.
+    2. **Vulnerabilidade**: Identifique e corrija potenciais falhas de segurança.
+    3. **Formatação**: Aplique consistência ao estilo de código (espaçamento, indentação, etc.).
+    4. **Reutilização**: Sugira modularidade e eliminação de redundâncias.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+    Aqui está o código para corrigir:
+    {prompt}
 
-### `npm run build` fails to minify
+    Responda com o código corrigido e inclua comentários explicativos quando necessário.
+    """
+    # Enviar o prompt para o modelo
+    response = chat.send_message(correction_prompt)
+    
+    # Retornar o texto da resposta
+    return response.text
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Exemplo de uso da função
+codigo = input("Insira o código para correção:\n")
+resultado = corrigir_codigo(codigo)
+print("\nCódigo corrigido:\n")
+print(resultado)
