@@ -23,6 +23,10 @@ for m in genai.list_models():
 chat = model.start_chat(history=[])
 
 # Criando o Chatbot com enfase em Correção de Código:
+```python
+# Iniciar o chatbot
+chat = model.start_chat(history=[])
+
 def corrigir_codigo(prompt):
     """
     Função que envia o código ao chatbot e retorna a resposta corrigida.
