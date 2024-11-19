@@ -2,6 +2,7 @@
 
 links: https://colab.research.google.com/
 
+# Instando a biblioteca 
 !pip install google-generativeai
 
 from google.colab import userdata
